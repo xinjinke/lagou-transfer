@@ -76,16 +76,18 @@ public class AnnotationParser {
                     ProxyFactory proxyFactory = (ProxyFactory) getBean("proxyFactory");
                     Class[] face = c.getInterfaces();//获取类c实现的所有接口
                     //判断对象是否实现接口
-                    if(face!=null&&face.length>0){
+                    if(face != null && face.length > 0){
                         //实现使用JDK
                         o = proxyFactory.getJdkProxy(o);
                     }else{
                         //没实现使用CGLIB
                         o = proxyFactory.getCglibProxy(o);
                     }
-                    map.put(entry.getKey(),o);
                 }
+                map.put(entry.getKey(),o);
             }
+
+
         }catch(Exception e){
 
         }
