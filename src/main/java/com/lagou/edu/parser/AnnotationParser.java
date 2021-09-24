@@ -60,15 +60,20 @@ public class AnnotationParser {
                             }
                         }
                     }
-
-
                 }
+                // 把处理之后的object重新放到map中
+                map.put(entry.getKey(),o);
+            }
 
+
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                Object o = entry.getValue();
+                Class c = o.getClass();
 
                 //判断对象类是否持有Transactional注解，若有则修改对象为代理对象
                 if(c.isAnnotationPresent(Transactional.class)){
                     //获取代理工厂
-                    ProxyFactory proxyFactory = (ProxyFactory) BeanFactory.getBean("proxyFactory");
+                    ProxyFactory proxyFactory = (ProxyFactory) getBean("proxyFactory");
                     Class[] face = c.getInterfaces();//获取类c实现的所有接口
                     //判断对象是否实现接口
                     if(face!=null&&face.length>0){
@@ -78,13 +83,9 @@ public class AnnotationParser {
                         //没实现使用CGLIB
                         o = proxyFactory.getCglibProxy(o);
                     }
+                    map.put(entry.getKey(),o);
                 }
-
-                // 把处理之后的object重新放到map中
-                map.put(entry.getKey(),o);
-
             }
-
         }catch(Exception e){
 
         }

@@ -13,6 +13,7 @@ import com.lagou.edu.utils.TransactionManager;
  * @author 应癫
  */
 @Service("transferService")
+@Transactional
 public class TransferServiceImpl implements TransferService {
 
     //private AccountDao accountDao = new JdbcAccountDaoImpl();
@@ -32,7 +33,6 @@ public class TransferServiceImpl implements TransferService {
 
 
     @Override
-    @Transactional
     public void transfer(String fromCardNo, String toCardNo, int money) throws Exception {
 
         /*try{
@@ -46,7 +46,7 @@ public class TransferServiceImpl implements TransferService {
             to.setMoney(to.getMoney()+money);
 
             accountDao.updateAccountByCardNo(to);
-            int c = 1/0;
+//            int c = 1/0;
             accountDao.updateAccountByCardNo(from);
 
         /*    // 提交事务
